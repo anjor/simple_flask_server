@@ -40,7 +40,7 @@ class EstuaryData:
             "collection": collection_id
         }
         resp = requests.post(url=EstuaryData.base_url + "/collections/add-content", headers=self.auth_header,
-                             data=payload)
+                             json=payload)
         app.logger.warn(resp.request.body)
         return resp.json()
 
