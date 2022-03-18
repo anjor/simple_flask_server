@@ -2,9 +2,12 @@ import logging
 import os
 
 from flask import Flask, jsonify, request
+from flask_cors import cross_origin, CORS
 import requests
 
 app = Flask(__name__)
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 gunicorn_logger = logging.getLogger('gunicorn.warn')
 app.logger.handlers = gunicorn_logger.handlers
@@ -51,6 +54,7 @@ child_collection_id = "825c5e9a-f967-49ea-86e7-341f860d027a"
 
 
 @app.route("/data/list", methods=["GET"])
+@cross_origin()
 def list_data():
     data = estuary.list_data()
     response = jsonify([construct_url(datum["cid"]["/"]) for datum in data])
@@ -59,6 +63,7 @@ def list_data():
 
 
 @app.route("/collections/male", methods=["POST"])
+@cross_origin()
 def add_cid_to_male_collection():
     content = request.get_json()
     app.logger.warn("request %s", request)
@@ -68,6 +73,7 @@ def add_cid_to_male_collection():
 
 
 @app.route("/collections/female", methods=["POST"])
+@cross_origin()
 def add_cid_to_female_collection():
     content = request.get_json()
     app.logger.warn("request %s", request)
@@ -77,6 +83,7 @@ def add_cid_to_female_collection():
 
 
 @app.route("/collections/child", methods=["POST"])
+@cross_origin()
 def add_cid_to_child_collection():
     content = request.get_json()
     app.logger.warn("request %s", request)
