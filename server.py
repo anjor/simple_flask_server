@@ -81,23 +81,3 @@ def add_cid_to_collection(collection):
         app.logger.warn("Unknown collection %s", collection)
 
     return resp
-
-
-@app.route("/collections/female", methods=["POST"])
-@cross_origin()
-def add_cid_to_female_collection():
-    content = request.get_json()
-    app.logger.warn("request %s", request)
-    app.logger.warn("content %s", content)
-    cid = content['cid']
-    estuary.add_cid_to_collection(cid, female_collection_id)
-
-
-@app.route("/collections/child", methods=["POST"])
-@cross_origin()
-def add_cid_to_child_collection():
-    content = request.get_json()
-    app.logger.warn("request %s", request)
-    app.logger.warn("content %s", content)
-    cid = content['cid']
-    estuary.add_cid_to_collection(cid, child_collection_id)
