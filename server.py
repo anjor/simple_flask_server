@@ -41,7 +41,7 @@ class EstuaryData:
         }
         resp = requests.post(url=EstuaryData.base_url + "/collections/add-content", headers=self.auth_header,
                              data=payload)
-        return resp
+        return resp.json()
 
 
 def construct_url(cid):
@@ -80,4 +80,4 @@ def add_cid_to_collection(collection):
     else:
         app.logger.warn("Unknown collection %s", collection)
 
-    return resp
+    return jsonify(resp)
