@@ -41,6 +41,7 @@ class EstuaryData:
         }
         resp = requests.post(url=EstuaryData.base_url + "/collections/add-content", headers=self.auth_header,
                              data=payload)
+        return resp
 
 
 def construct_url(cid):
@@ -62,14 +63,24 @@ def list_data():
     return response
 
 
-@app.route("/collections/male", methods=["POST"])
+@app.route("/collections/<collection>", methods=["POST"])
 @cross_origin()
-def add_cid_to_male_collection():
+def add_cid_to_collection(collection):
     content = request.get_json()
     app.logger.warn("request %s", request)
     app.logger.warn("content %s", content)
     cid = content['cid']
-    estuary.add_cid_to_collection(cid, male_collection_id)
+    resp = {}
+    if collection == 'male':
+        resp = estuary.add_cid_to_collection(cid, male_collection_id)
+    elif collection == 'female':
+        resp = estuary.add_cid_to_collection(cid, female_collection_id)
+    elif collection == 'child':
+        resp = estuary.add_cid_to_collection(cid, child_collection_id)
+    else:
+        app.logger.warn("Unknown collection %s", collection)
+
+    return resp
 
 
 @app.route("/collections/female", methods=["POST"])
