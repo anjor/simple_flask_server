@@ -60,7 +60,7 @@ def list_data():
 
 @app.route("/collections/male", methods=["POST"])
 def add_cid_to_male_collection():
-    content = request.json
+    content = request.get_json()
     app.logger.warn("request %s", request)
     app.logger.warn("content %s", content)
     cid = content['cid']
@@ -69,7 +69,7 @@ def add_cid_to_male_collection():
 
 @app.route("/collections/female", methods=["POST"])
 def add_cid_to_female_collection():
-    content = request.json
+    content = request.get_json()
     app.logger.warn("request %s", request)
     app.logger.warn("content %s", content)
     cid = content['cid']
@@ -78,7 +78,7 @@ def add_cid_to_female_collection():
 
 @app.route("/collections/child", methods=["POST"])
 def add_cid_to_child_collection():
-    content = request.json
+    content = request.get_json()
     app.logger.warn("request %s", request)
     app.logger.warn("content %s", content)
     cid = content['cid']
