@@ -41,6 +41,7 @@ class EstuaryData:
         }
         resp = requests.post(url=EstuaryData.base_url + "/collections/add-content", headers=self.auth_header,
                              data=payload)
+        app.logger.warn(resp.request.body)
         return resp.json()
 
 
@@ -70,6 +71,7 @@ def add_cid_to_collection(collection):
     app.logger.warn("request %s", request)
     app.logger.warn("content %s", content)
     cid = content['cid']
+    app.logger.warn("cid %s", cid)
     resp = {}
     if collection == 'male':
         resp = estuary.add_cid_to_collection(cid, male_collection_id)
