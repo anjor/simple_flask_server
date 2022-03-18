@@ -56,7 +56,7 @@ child_collection_id = "825c5e9a-f967-49ea-86e7-341f860d027a"
 
 
 @app.route("/data/list", methods=["GET"])
-@cross_origin()
+@cross_origin(origins=["http://anjor-simple-react-app.herokuapp.com/"])
 def list_data():
     data = estuary.list_data()
     response = jsonify([construct_url(datum["cid"]["/"]) for datum in data])
@@ -65,7 +65,7 @@ def list_data():
 
 
 @app.route("/collections/<collection>", methods=["POST"])
-@cross_origin()
+@cross_origin(origins=["http://anjor-simple-react-app.herokuapp.com/"])
 def add_cid_to_collection(collection):
     content = request.get_json()
     app.logger.warn("request %s", request)
