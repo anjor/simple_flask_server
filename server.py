@@ -1,9 +1,14 @@
+import logging
 import os
 
 from flask import Flask, jsonify, request
 import requests
 
 app = Flask(__name__)
+
+gunicorn_logger = logging.getLogger('gunicorn.warn')
+app.logger.handlers = gunicorn_logger.handlers
+app.logger.setLevel(gunicorn_logger.level)
 
 
 class EstuaryData:
@@ -56,6 +61,8 @@ def list_data():
 @app.route("/collections/male", methods=["POST"])
 def add_cid_to_male_collection():
     content = request.json
+    app.logger.warn("request %s", request)
+    app.logger.warn("content %s", content)
     cid = content['cid']
     estuary.add_cid_to_collection(cid, male_collection_id)
 
@@ -63,6 +70,8 @@ def add_cid_to_male_collection():
 @app.route("/collections/female", methods=["POST"])
 def add_cid_to_female_collection():
     content = request.json
+    app.logger.warn("request %s", request)
+    app.logger.warn("content %s", content)
     cid = content['cid']
     estuary.add_cid_to_collection(cid, female_collection_id)
 
@@ -70,5 +79,7 @@ def add_cid_to_female_collection():
 @app.route("/collections/child", methods=["POST"])
 def add_cid_to_child_collection():
     content = request.json
+    app.logger.warn("request %s", request)
+    app.logger.warn("content %s", content)
     cid = content['cid']
     estuary.add_cid_to_collection(cid, child_collection_id)
